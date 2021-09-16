@@ -4,6 +4,7 @@
 	"description": "Creates .cbp file from sources.",
 	"author": "Flux",
 	"publisher": "Flux",
+	"repository": "https://github.com/Flaxar/code-blocks-cbp-generator/tree/main/cbp",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.60.0"

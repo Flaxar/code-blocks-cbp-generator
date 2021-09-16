@@ -47,34 +47,46 @@ export class FileHandler {
     generateProjectFile(projectTitle: string) {
         let xml = xmlBuilder.convert(defaultXML, { format: "object" }) as any;
 
+        // console.log(defaultXML);
+        // console.log(xmlBuilder.convert(xml, { format: "json", prettyPrint: true }));
+
 
         xml.CodeBlocks_project_file.Project.Option[0]['@title'] = projectTitle;
 
+        xml.CodeBlocks_project_file.Project.Unit = [];
+        // console.log("1");
 
-        let i = 0;
+        //let i = 0;
         for(const file of this.findSourceFiles()) {
-            xml.CodeBlocks_project_file.Project.Unit[i] = {
+            // console.log("found source: %s", file);
+            xml.CodeBlocks_project_file.Project.Unit.push({
                 '@filename': file,
                 Option: {
                     '@compilerVar': 'CC'
                 }
-            }
-            i++;
+            });
+            //i++;
         }
 
         
 
         for(const file of this.findHeaders()) {
-            xml.CodeBlocks_project_file.Project.Unit[i] = {
+            // console.log("found header: %s", file);
+            xml.CodeBlocks_project_file.Project.Unit.push({
                 '@filename': file
-            }
-            i++;
+            });
+            //i++;
+        }
+        try{
+            // console.log("converting %o to string", xml);
+            // console.log(new XMLSerializer().serializeToString(xml));
+            // console.log(xmlBuilder.convert(xml, { format: "json", prettyPrint: true }));
+            const finalXMLString = xmlBuilder.convert(xml, { format: 'xml', prettyPrint: true });
+            fs.writeFileSync(this.workFolder + "/Projekt.cbp", finalXMLString);
+        } catch(e) {
+            console.error(e);
         }
 
-        const finalXMLString = xmlBuilder.convert(xml, { format: 'xml', prettyPrint: true });
-        fs.writeFileSync(this.workFolder + "/Projekt.cbp", finalXMLString);
-        
-        console.log();
     }
 
     findSourceFiles(): string[] {

@@ -36,12 +36,6 @@ export const defaultXML = `
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-        <Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-        <Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
